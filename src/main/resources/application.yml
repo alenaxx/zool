@@ -1,0 +1,41 @@
+
+server:
+  port: 8762
+spring:
+  application:
+    name: zuul-server
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+    fetch-registry: true
+    register-with-eureka: true
+#management:
+#  endpoint:
+#    routes:
+#      enabled: true
+#  endpoints:
+#    web:
+#      exposure:
+#        include: "*"
+zuul:
+  routes:
+    payments:
+      path: /payments/**
+      service-id: payment-client
+      strip-prefix: false
+
+    orders:
+      path: /orders/**
+      service-id: order-client
+      strip-prefix: false
+
+    warehouse:
+      path: /warehouse/**
+      service-id: warehouse-client
+      strip-prefix: false
+
+  prefix: /api
+ # ignored-patterns: /api/orders/*
